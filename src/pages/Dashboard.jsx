@@ -156,12 +156,13 @@ export function Dashboard() {
         <div className="space-y-3">
           {bpfChecklists.map(checklist => {
             const total = checklist.itens.length;
+            const respondidos = checklist.itens.filter(i => i.status !== null).length;
             const conformes = checklist.itens.filter(i => i.status === 'conforme').length;
-            const percent = Math.round((conformes / total) * 100);
+            const percent = respondidos === 0 ? 0 : Math.round((conformes / respondidos) * 100);
             return (
               <div key={checklist.id}>
                 <div className="flex justify-between mb-1">
-                  <span className="text-sm text-gray-700">{checklist.categoria}</span>
+                  <span className="text-sm text-gray-700">{checklist.nome}</span>
                   <span className={`text-sm font-semibold ${percent >= 80 ? 'text-green-600' : percent >= 60 ? 'text-yellow-600' : 'text-red-600'}`}>
                     {percent}%
                   </span>
